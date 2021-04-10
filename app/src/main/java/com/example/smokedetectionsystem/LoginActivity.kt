@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val document = task.result
                     if (password == document!!.getString("password")) {
-                        Toast.makeText(this, "Successful", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Login successfully", Toast.LENGTH_LONG).show()
                         with(sharedPref.edit()) {
                             putString("pref_email", email)
                             putString("pref_pass", password)
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(this, "Wrong email or pass", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     Log.d(TAG, "Failed with: ", task.exception)

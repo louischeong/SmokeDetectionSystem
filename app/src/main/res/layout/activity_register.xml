@@ -15,7 +15,8 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="Email"/>
 
     <EditText
         android:id="@+id/res_input_password"
@@ -26,7 +27,8 @@
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_input_email" />
+        app:layout_constraintTop_toBottomOf="@+id/res_input_email"
+        android:hint="Password"/>
 
     <EditText
         android:id="@+id/res_input_confirm_password"
@@ -37,16 +39,31 @@
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_input_password" />
+        app:layout_constraintTop_toBottomOf="@+id/res_input_password"
+        android:hint="Confirm Password"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_register"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:background="@color/purple_500"
+        android:textColor="@color/white"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/res_input_confirm_password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_back"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:background="#DCDCDC"
+        android:text="Back"
+        android:textColor="#696969"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_register" />
 </androidx.constraintlayout.widget.ConstraintLayout>

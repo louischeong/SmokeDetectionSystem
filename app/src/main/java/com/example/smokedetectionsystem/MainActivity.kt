@@ -16,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val intent = Intent(this, NotificationActivity::class.java)
+            startActivity(intent)
         }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -35,16 +36,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             val token = task.result
-            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
             val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
             val email = sharedPref.getString("pref_email","").toString()
             db.collection("users")
                 .document(email).update("token", token)
                 .addOnSuccessListener {
-                    Toast.makeText(baseContext, "Successfully updated token", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Successfully updated token")
                 }
                 .addOnFailureListener {
-                    Toast.makeText(baseContext, "Failed updating token", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Failed updating token")
                 }
         })
     }
@@ -67,10 +67,10 @@ class MainActivity : AppCompatActivity() {
                 db.collection("users")
                     .document(email).update("token", "")
                     .addOnSuccessListener {
-                        Toast.makeText(baseContext, "Successfully cleared token", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "Cleared token successfully")
                     }
                     .addOnFailureListener {
-                        Toast.makeText(baseContext, "Failed clearing token", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "Failed clearing token")
                     }
 
                 with(sharedPref.edit()) {

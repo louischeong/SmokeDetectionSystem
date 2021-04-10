@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/rectangle">
+
+    <ImageView
+        android:id="@+id/userImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="9dp"
+        android:src="@drawable/warningv2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/senderName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/senderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/userImage"
+        android:layout_toRightOf="@+id/userImage"
+        android:text="WARNING"
+        android:textColor="#f9a726"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/userImage"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/senderMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/senderName"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/userImage"
+        android:layout_toRightOf="@+id/userImage"
+        android:maxWidth="300dp"
+        android:text="Smoke Detector has detected smoke in your house !"
+        android:textColor="#f9a726"
+        android:textSize="11dp"
+        app:layout_constraintStart_toEndOf="@+id/userImage"
+        app:layout_constraintTop_toBottomOf="@+id/senderName">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/senderMsg"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/userImage"
+        android:text="Detected on:"
+        android:textColor="#f9a726"
+        android:textSize="11dp"
+        ></TextView>
+
+    <TextView
+        android:id="@+id/text_dateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/senderMsg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_toEndOf="@+id/textView"
+        android:text="10/4/2020 @ 14:00:00"
+        android:textStyle="bold"
+        android:textColor="#f9a726"
+        android:textSize="11dp">
+
+    </TextView>
+
+</RelativeLayout>

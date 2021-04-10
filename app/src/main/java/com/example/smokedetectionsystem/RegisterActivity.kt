@@ -21,7 +21,8 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         val btnRegister = findViewById<Button>(R.id.button_register)
-        btnRegister.setOnClickListener() {
+        val btnBack = findViewById<Button>(R.id.button_back)
+        btnRegister.setOnClickListener {
             val email = findViewById<EditText>(R.id.res_input_email).text.toString().trim()
             val password = findViewById<EditText>(R.id.res_input_password).text.toString().trim()
             val conPassword = findViewById<EditText>(R.id.res_input_confirm_password).text.toString().trim()
@@ -31,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val document = task.result
                     if (document!!.exists()) {
-                        Toast.makeText(this, "Invalid Email.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Email has been used, please use other email address.", Toast.LENGTH_LONG).show()
                     } else {
                         if (password == conPassword) {
                             val data = hashMapOf(
@@ -41,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
                             db.collection("users")
                                 .document(email).set(data)
                                 .addOnSuccessListener {
-                                    Toast.makeText(baseContext, "Successful Registered", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(baseContext, "Register Successfully", Toast.LENGTH_SHORT).show()
                                 }
                                 .addOnFailureListener {
                                     Toast.makeText(baseContext, "Failed Registered", Toast.LENGTH_SHORT).show()
@@ -56,6 +57,9 @@ class RegisterActivity : AppCompatActivity() {
                     Log.d(TAG, "Failed with: ", task.exception)
                 }
             }
+        }
+        btnBack.setOnClickListener{
+            finish()
+        }
     }
-}
 }
