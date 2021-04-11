@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#CFC7DE">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.SmokeDetectionSystem.AppBarOverlay"
@@ -22,7 +24,97 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:background="@drawable/rectangle2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableLayout
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tableLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TableRow android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Gas Value:"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"></TextView>
+
+                <TextView
+                    android:id="@+id/text_gas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="000"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"></TextView>
+            </TableRow>
+
+            <TableRow android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Temperature (°C):"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"></TextView>
+
+                <TextView
+                    android:id="@+id/text_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_gas"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="000"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"></TextView>
+            </TableRow>
+
+            <TableRow android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Humidity (%):"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"></TextView>
+
+                <TextView
+                    android:id="@+id/text_hum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="000"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textSize="25dp"></TextView>
+            </TableRow>
+
+        </TableLayout>
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -34,10 +126,23 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_email" >
+        app:srcCompat="@android:drawable/ic_dialog_email">
 
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:text="Home Status"
+        android:textColor="#4B4454"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
