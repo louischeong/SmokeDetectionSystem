@@ -27,34 +27,38 @@ class RegisterActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.res_input_password).text.toString().trim()
             val conPassword = findViewById<EditText>(R.id.res_input_confirm_password).text.toString().trim()
 
-            val docRef = db.collection("users").document(email)
-            docRef.get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val document = task.result
-                    if (document!!.exists()) {
-                        Toast.makeText(this, "Email has been used, please use other email address.", Toast.LENGTH_LONG).show()
-                    } else {
-                        if (password == conPassword) {
-                            val data = hashMapOf(
-                                "password" to password,
-                                "token" to ""
-                            )
-                            db.collection("users")
-                                .document(email).set(data)
-                                .addOnSuccessListener {
-                                    Toast.makeText(baseContext, "Register Successfully", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(baseContext, "Failed Registered", Toast.LENGTH_SHORT).show()
-                                }
-                            finish()
+            if((email.isNullOrEmpty()) || (password.isNullOrEmpty()) || (conPassword.isNullOrEmpty())){
+                Toast.makeText(this, "Please fill in all the required fields.", Toast.LENGTH_LONG).show()
+            }else {
+                val docRef = db.collection("users").document(email)
+                docRef.get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        if (document!!.exists()) {
+                            Toast.makeText(this, "Email has been used, please use other email address.", Toast.LENGTH_LONG).show()
                         } else {
-                            Toast.makeText(this, "Password and Confirm password should be the same.", Toast.LENGTH_LONG).show()
-                        }
+                            if (password == conPassword) {
+                                val data = hashMapOf(
+                                    "password" to password,
+                                    "token" to ""
+                                )
+                                db.collection("users")
+                                    .document(email).set(data)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(baseContext, "Register Successfully", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(baseContext, "Failed Registered", Toast.LENGTH_SHORT).show()
+                                    }
+                                finish()
+                            } else {
+                                Toast.makeText(this, "Password and Confirm password should be the same.", Toast.LENGTH_LONG).show()
+                            }
 
+                        }
+                    } else {
+                        Log.d(TAG, "Failed with: ", task.exception)
                     }
-                } else {
-                    Log.d(TAG, "Failed with: ", task.exception)
                 }
             }
         }

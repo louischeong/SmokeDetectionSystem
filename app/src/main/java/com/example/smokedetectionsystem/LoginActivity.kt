@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.input_password).text.toString().trim()
 
             if((email.isNullOrEmpty()) || (password.isNullOrEmpty())){
-                Toast.makeText(this, "This is required!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Please fill in all the required fields.", Toast.LENGTH_LONG).show()
             }else {
                 val docRef = db.collection("users").document(email)
                 docRef.get().addOnCompleteListener { task ->
