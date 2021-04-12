@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
             R.id.action_logout -> {
                 val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
                 val email = sharedPref.getString("pref_email", "").toString()

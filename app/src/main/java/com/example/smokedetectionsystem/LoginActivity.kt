@@ -30,11 +30,11 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.input_email).text.toString().trim()
             val password = findViewById<EditText>(R.id.input_password).text.toString().trim()
-            val docRef = db.collection("users").document(email)
 
-            if((email.toString().isNullOrEmpty()) || (password.toString().isNullOrEmpty())){
+            if((email.isNullOrEmpty()) || (password.isNullOrEmpty())){
                 Toast.makeText(this, "This is required!", Toast.LENGTH_LONG).show()
             }else {
+                val docRef = db.collection("users").document(email)
                 docRef.get().addOnCompleteListener { task ->
 
 
