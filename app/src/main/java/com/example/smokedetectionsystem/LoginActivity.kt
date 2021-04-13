@@ -37,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
                 val docRef = db.collection("users").document(email)
                 docRef.get().addOnCompleteListener { task ->
 
-
                         if (task.isSuccessful) {
                             val document = task.result
                             if (password == document!!.getString("password")) {

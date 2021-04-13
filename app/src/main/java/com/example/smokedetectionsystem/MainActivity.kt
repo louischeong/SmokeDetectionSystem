@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
@@ -21,7 +22,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val TAG = "MainActivity"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         val gasText = findViewById<TextView>(R.id.text_gas)
         val tempText = findViewById<TextView>(R.id.text_temp)
         val humText = findViewById<TextView>(R.id.text_hum)
+        val smokeText = findViewById<TextView>(R.id.smokeDetected_text)
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val map = dataSnapshot.value as Map<String, Any>?
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
                     gasText.text = map["GasValue"].toString()
                     tempText.text = map["Temperature"].toString()
                     humText.text = map["Humidity"].toString()
+                    if (Integer.parseInt(map["GasValue"].toString()) > 400){
+                        smokeText.visibility = TextView.VISIBLE
+                    } else {
+                        smokeText.visibility = TextView.INVISIBLE
+                    }
                 }
             }
 
@@ -73,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -18,7 +18,6 @@ class NotificationActivity : AppCompatActivity() {
     private val TAG = "NotificationActivity"
     private val db = FirebaseFirestore.getInstance()
     private var dateTimes: ArrayList<String> = ArrayList()
-    val placesRef = db.collection("notifications")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +40,6 @@ class NotificationActivity : AppCompatActivity() {
                     recyclerView.layoutManager = LinearLayoutManager(this)
                 }
             }
-
 
     }
 }
