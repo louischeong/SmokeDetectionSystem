@@ -2,10 +2,12 @@ package com.example.smokedetectionsystem
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Switch
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
@@ -17,11 +19,18 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 
 
 class MainActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val TAG = "MainActivity"
+    private var series : LineGraphSeries<DataPoint>? = null
+    private var lastX = 0.0
+    private var mTimer2: Runnable? = null
+    private val mHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +75,8 @@ class MainActivity : AppCompatActivity() {
                     gasText.text = map["GasValue"].toString()
                     tempText.text = map["Temperature"].toString()
                     humText.text = map["Humidity"].toString()
-                    if (Integer.parseInt(map["GasValue"].toString()) > 400){
+
+                    if (Integer.parseInt(map["GasValue"].toString()) > 400) {
                         smokeText.visibility = TextView.VISIBLE
                     } else {
                         smokeText.visibility = TextView.INVISIBLE
@@ -79,8 +89,44 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG, "Failed to read value.", error.toException())
             }
         })
+        val graph = findViewById<GraphView>(R.id.graph)
+        series = LineGraphSeries()
+        graph.addSeries(series);
+        val viewport = graph.viewport
 
+        viewport.isXAxisBoundsManual = true
+        viewport.isYAxisBoundsManual = true
+        viewport.setMinX(0.0)
+        viewport.setMaxY(1000.0)
+        viewport.setMaxX(40.0)
+        viewport.isScrollable = false
+
+
+        val button = findViewById<Button>(R.id.button_more)
+        button.setOnClickListener{
+            val intent = Intent(this, RealTimeGraphs::class.java)
+            startActivity(intent)
+        }
     }
+    override fun onResume() {
+        super.onResume()
+
+        mTimer2 = object : Runnable {
+            override fun run() {
+                lastX += 1.0
+                val gasText = findViewById<TextView>(R.id.text_gas).text.toString().toDouble()
+                series?.appendData(DataPoint(lastX, gasText), true, 40)
+                mHandler.postDelayed(this, 1000)
+            }
+        }
+        mHandler.postDelayed(mTimer2 as Runnable, 100)
+    }
+
+    override fun onPause() {
+        mHandler.removeCallbacks(mTimer2!!)
+        super.onPause()
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

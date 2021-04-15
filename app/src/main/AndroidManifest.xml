@@ -8,9 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SmokeDetectionSystem">
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".RegisterActivity" />
+        android:theme="@style/Theme.SmokeDetectionSystem.NoActionBar">
+        <activity android:name=".RealTimeGraphs"></activity>
+        <activity android:name=".NotificationActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SmokeDetectionSystem.NoActionBar"></activity>
+            android:theme="@style/Theme.SmokeDetectionSystem.NoActionBar" />
 
         <service android:name=".FirebaseInstanceIdService">
             <intent-filter>

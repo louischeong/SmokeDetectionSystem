@@ -19,51 +19,48 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
-        if(sharedPref.contains(("pref_email")) && sharedPref.contains("pref_pass")){
+        if (sharedPref.contains("pref_email")) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
         val btnLogin = findViewById<Button>(R.id.button_login)
-        val btnRegister = findViewById<Button>(R.id.button_sign_up)
         btnLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.input_email).text.toString().trim()
             val password = findViewById<EditText>(R.id.input_password).text.toString().trim()
 
-            if((email.isNullOrEmpty()) || (password.isNullOrEmpty())){
+            if ((email.isNullOrEmpty()) || (password.isNullOrEmpty())) {
                 Toast.makeText(this, "Please fill in all the required fields.", Toast.LENGTH_LONG).show()
-            }else {
-                val docRef = db.collection("users").document(email)
-                docRef.get().addOnCompleteListener { task ->
-
-                        if (task.isSuccessful) {
-                            val document = task.result
-                            if (password == document!!.getString("password")) {
-                                Toast.makeText(this, "Login successfully", Toast.LENGTH_LONG).show()
-                                with(sharedPref.edit()) {
-                                    putString("pref_email", email)
-                                    putString("pref_pass", password)
-                                    apply()
-                                }
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_LONG).show()
-                            }
-                        } else {
-                            Log.d(TAG, "Failed with: ", task.exception)
+            } else {
+                if (password == "secretkey123") {
+                    Toast.makeText(this, "Login successfully", Toast.LENGTH_LONG).show()
+                    with(sharedPref.edit()) {
+                        putString("pref_email", email)
+                        apply()
+                    }
+                    val data = hashMapOf(
+                        "token" to ""
+                    )
+                    db.collection("users")
+                        .document(email).set(data)
+                        .addOnSuccessListener {
+                            Toast.makeText(baseContext, "Register Successfully", Toast.LENGTH_SHORT).show()
                         }
+                        .addOnFailureListener {
+                            Toast.makeText(baseContext, "Failed Registered", Toast.LENGTH_SHORT).show()
+                        }
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Incorrect secret key", Toast.LENGTH_LONG).show()
                 }
+
+
             }
 
         }
 
-        btnRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-
-        }
     }
 }
