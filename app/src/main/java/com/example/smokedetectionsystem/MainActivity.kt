@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private var series : LineGraphSeries<DataPoint>? = null
     private var lastX = 0.0
-    private var mTimer2: Runnable? = null
+    private var mTimer: Runnable? = null
     private val mHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        mTimer2 = object : Runnable {
+        mTimer = object : Runnable {
             override fun run() {
                 lastX += 1.0
                 val gasText = findViewById<TextView>(R.id.text_gas).text.toString().toDouble()
@@ -119,11 +119,11 @@ class MainActivity : AppCompatActivity() {
                 mHandler.postDelayed(this, 1000)
             }
         }
-        mHandler.postDelayed(mTimer2 as Runnable, 100)
+        mHandler.postDelayed(mTimer as Runnable, 100)
     }
 
     override fun onPause() {
-        mHandler.removeCallbacks(mTimer2!!)
+        mHandler.removeCallbacks(mTimer!!)
         super.onPause()
     }
 
